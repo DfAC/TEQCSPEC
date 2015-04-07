@@ -1,8 +1,13 @@
 function out=teqcspec(files);
  close(findall(0,'Type','figure')); 
  clear all
- dbstop if error
-%  dbstop at 333
+dbstop if error
+dbstop at 146
+  
+%LKB stuff
+Constant.PlotName ='QC_'; %see below for name change!
+Constant.PlotResolution=300;
+  
 
 %TEQCSPEC  TEQC multipath spectrum analysis
 %++++++++++++++++++++++++++++++++
@@ -11,7 +16,7 @@ function out=teqcspec(files);
 %   time range (see example below).
 %
 %   Clement.Ogaja@gmail.com
-% edit after Leon by LKB (2014)
+% edit after Lei by LKB (2014-2015)
 
 
 frqlim = 0.2;  %Max. plotting frequency (Hz)
@@ -93,6 +98,8 @@ else
     filen={[filen ext]};
 end
 file=char(filen);
+%lkb
+Constant.PlotName =[filen(1:end-4),'_']; %no extensions
 
 global Sat_Capacity
 Sat_Capacity=64;
@@ -105,7 +112,7 @@ for k=1:Sat_Capacity
         SatList{k}=strcat('R',num2str(k-32,'%02d'));
     end
 end
-SatList{63}='E19';
+SatList{63}='E19'; %Galileo
 SatList{64}='E20';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -137,8 +144,10 @@ satval=sat; % multipath time series
 %%%%% Import azimuth and elevation data  %%%%%%%%%%%%%%%%%%%%%%
 
 out=teqcplot([path,(file(1:end-4)),'.azi']);az=out.azi;az_all=az;
+	screen2print([Constant.PlotName 'Az'],Constant.PlotResolution); %save plots
 out=teqcplot([path,(file(1:end-4)),'.ele']);el=out.ele;el_all=el;
-
+	screen2print([Constant.PlotName 'El'],Constant.PlotResolution); %save plots
+	
 save midresult
 load midresult
 
@@ -242,6 +251,8 @@ xlabel([datestr(JD(1)) '   |--------  T Samp: ' num2str(T_SAMP) ' s  --------|  
 ylabel('SVs')
 T=title(['TEQC Report file: ' strrep(file,'_','-')]);set(T,'fontsize',8)
 
+screen2print([Constant.PlotName 'FFTraw'],Constant.PlotResolution); %save plots
+
 figure;
 h=axes('position',[0.11, 0.75, 0.85, 0.18]);  
 map=colormap(flipud(jet));%colormap;
@@ -326,6 +337,9 @@ xlabel([datestr(JD(t1)) '   |--------  Freq. (Hz)  --------|    ' datestr(JD(t2)
 ylabel('SVS');
 grid on
 
+screen2print([Constant.PlotName 'FFTproc'],Constant.PlotResolution); %save plots
+
+
 %%%%% (2) display unfiltered and filtered multipath  %%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -387,6 +401,8 @@ end
 xlabel([datestr(JD(T1)) '   |--------  Unfiltered  --------|    ' datestr(JD(T2))])
 T=title(['TEQC Report file: ' strrep(file,'_','-')]);set(T,'fontsize',8)
 
+screen2print([Constant.PlotName 'MPraw'],Constant.PlotResolution); %save plot
+
 figure;
 
 if plot_flag(5)==1
@@ -402,6 +418,8 @@ else
 end
 xlabel([datestr(JD(T1)) '   |--------  Filtered  --------|    ' datestr(JD(T2))])
 T=title(['TEQC Report file (debuged) : ' strrep(file,'_','-')]);set(T,'fontsize',8)
+
+screen2print([Constant.PlotName 'MPproc'],Constant.PlotResolution); %save plot
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % END OF PLOTS
