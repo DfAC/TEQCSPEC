@@ -2,11 +2,11 @@ function out=teqcspec(files);
  close(findall(0,'Type','figure')); 
  clear all
 dbstop if error
-dbstop at 146
+%dbstop at 146
   
 %LKB stuff
 Constant.PlotName ='QC_'; %see below for name change!
-Constant.PlotResolution=300;
+Constant.PlotResolution=500;
   
 
 %TEQCSPEC  TEQC multipath spectrum analysis
