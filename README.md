@@ -3,7 +3,7 @@
 This is an updated version of [TEQC multipath metric](http://www.mathworks.com/matlabcentral/fileexchange/12886-teqcspec/content/Teqcspec/teqcspec.m) originally written by Clement Ogaja.
 Description of functions can be found in [his paper][paper].
 
-Introduced changes allows to run script in new version of Matlab (past 2012) and to use RINEX 2.11. There have been small changes in layout allowing easier use for students.
+Introduced changes allows to run script in new version of Matlab (past 2012) and to use RINEX 2.11. There have been small changes in layout allowing easier use for the students of H24VLP MSc Module at the University of Nottingham.
 
 ## Input
 
@@ -13,7 +13,7 @@ Software require COMPACT2 qc files produced by [teqc](http://bit.ly/1KfxvZM) (*t
 ## Contributions
 
 * Clement Ogaja
-* Leon Lei
+* Lei Yang
 * Lukasz K Bonenberg
 
 
