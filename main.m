@@ -6,7 +6,7 @@ dbstop if error
   
 %LKB stuff
 Constant.PlotName ='QC_'; %see below for name change!
-Constant.PlotResolution=500;
+Constant.PlotResolution=300;
   
 
 %TEQCSPEC  TEQC multipath spectrum analysis
