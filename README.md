@@ -12,6 +12,8 @@ This code is used during [24VSP Satellite Based Positioning Practical Project 1 
 Software require COMPACT2 qc files produced by [teqc](http://bit.ly/1KfxvZM) (*teqc +qc +plot data.16o*). You need to use old binaries as the latest ones (2015+) use COMPACT3 format. For more information check [this paper][paper].
 
 
+Note that sky plot will be based on selected file (*.sn* or *.mp*) yet they are only meaningful for *.mp* ones.
+
 ## Contributions
 
 * Clement Ogaja
