@@ -89,7 +89,8 @@ plot_flag=[120 1 1 1 1 0 -4 3]; %   [samplerate considerNaN max(abs()) log unifo
 %
 if nargin==0
     [filen,path]=uigetfile('*.sn1;*.sn2;*.mp1;*.mp2',...
-        'Pick your TEQC report file');
+        'Pick your TEQC report file for skyplot preview');
+    %note that only selected file get plotted so you might be forced to run software 4 times
 else
     [path,filen,ext]=fileparts(files);
     %path=[path '\'];
