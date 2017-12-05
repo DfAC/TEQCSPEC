@@ -1,4 +1,4 @@
-function [t_samp mjl SAT n] = readfile(N,n,i,A,filen,file)
+function [t_samp mjl SAT n] = readfile(N,n,i,A,file)
 % See also TEQCSPEC, CHECKFILE, SCANFILE
 %
 % History
@@ -12,8 +12,7 @@ fid=fopen(file);
 
 sats=A;
 
-% snyggfilen=strrep(filen,'_','-');
-% h=waitbar(0,['Please wait... Importing ' char(snyggfilen)]);
+% h=waitbar(0,['Please wait... Importing ' char(file)]);
 
 while 1;
     tline = fgetl(fid);

@@ -1,11 +1,10 @@
-function polarview(theta,rho,z,prn,Plot_ValueRange)
+function bandview(theta,rho,z,prn,Plot_ValueRange)
 
-%POLARVIEW  Polar image plot.
-%   POLARVIEW(THETA, RHO, Z, PRN) makes a geographically oriented plot using 
-%   polar coordinates of the angle THETA, in radians, versus the radius
-%   RHO.
+%BANDVIEW  sky image plot in a bandview.
+%   BANDVIEW(THETA, RHO, Z, PRN,Plot_ValueRange) makes a geographically oriented plot  
+%   in a band view of the angle THETA, in radians, versus the radius  RHO.
 %
-%   Clement.Ogaja@gmail.com
+%   Lei Yang
 
 if isstr(theta) | isstr(rho)
     error('Input arguments must be numeric.');
@@ -43,7 +42,7 @@ if ~hold_state
     hold on;
     maxrho = max(abs(rho(:)));
     hhh=plot([-maxrho -maxrho maxrho maxrho],[-maxrho maxrho maxrho -maxrho]);
-    set(gca,'dataaspectratio',[1 1 1],'plotboxaspectratiomode','auto')
+%     set(gca,'dataaspectratio',[1 1 1],'plotboxaspectratiomode','auto')
     v = [get(cax,'xlim') get(cax,'ylim')];
 %     v=[-1 1 -1 1];
     ticks = sum(get(cax,'ytick')>=0);
@@ -137,4 +136,85 @@ if ~hold_state
 end
 set(get(gca,'xlabel'),'visible','on')
 set(get(gca,'ylabel'),'visible','on')
+end
 
+function plotsquare(x,y,v,prn,Plot_ValueRange,marker)
+
+x=THETA/pi*180;
+y=(1-RHO)*90;
+v=sample_SatVal_Active;
+ prn=SV_visiable;
+
+    global Sat_Capacity     % 1-32 : GPS ; 33-64 : GLONASS ; 65-96: GALILEO
+    global SatList
+
+    if nargin <6,    marker='.';    end
+
+    % create colormap as red-->yellow-->green
+    temp=hsv(32*3);temp=temp(1:32,:);
+    map=colormap(temp);   
+
+    if Plot_ValueRange(1)>Plot_ValueRange(2)
+        map=flipud(map);
+    end
+
+
+    [row col]=size(x);
+
+    % Plot the points
+    tempshift=0;
+    if Plot_ValueRange(1)<0
+        v=v-Plot_ValueRange(1);
+
+        tempshift=Plot_ValueRange(1);
+        Plot_ValueRange=Plot_ValueRange-Plot_ValueRange(1);
+    end
+
+    miv=min(Plot_ValueRange);
+    mav=max(Plot_ValueRange);
+
+
+    hold on
+    for j=1:col,
+        for i=1:row%length(x)
+            in=round((v(i,j)-miv)*(length(map)-1)/(mav-miv));
+            %--- Catch the out-of-range numbers
+            if in<=0;in=1;end
+            if in > length(map);in=length(map);end
+            if isnan(in);in=1;end
+
+            if v(i,j)>0
+                plot(x(i,j),y(i,j),marker,'color',map(in,:),'markerfacecolor',map(in,:))
+            end
+            if i==row,
+                ht=text(x(i,j),y(i,j),SatList{prn(j))'};set(ht,'fontsize',8);
+            end
+        end
+    end
+    hold off
+    
+    set(gca,'xlabel','Azimuth (degree)')
+    set(gca,'ylabel','Elevation (degree)')
+
+% Re-format the colorbar
+h=colorbar;
+colormark_num=5;
+set(h,'fontsize',8);
+set(h,'ylim',[0 1])
+yal=linspace(0,1,colormark_num);
+set(h,'ytick',yal);
+% Create the yticklabels
+ytl=linspace(miv,mav,colormark_num)+tempshift;
+s=char(colormark_num,4);
+for i=1:colormark_num
+    if min(abs(ytl)) >= 0.001
+        B=sprintf('%4.2f',ytl(i));
+    else
+        B=sprintf('%4.2E',ytl(i));
+    end
+    s(i,1:length(B))=B;
+end
+set(h,'yticklabel',s);
+
+grid on
+end
