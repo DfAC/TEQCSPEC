@@ -1,4 +1,5 @@
 function A=UpdateSatInview(tline)
+    % note: for readfile only, not for readfile_v2
 
     global SatList
     
