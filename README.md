@@ -8,7 +8,7 @@ Introduced changes allows to run script in new version of Matlab (past 2012) and
 
 ## Input
 
-Software **require COMPACT2 qc files produced by [teqc](http://bit.ly/1KfxvZM) (*teqc +qc +plot data.16o*). You need to use old binaries as the latest ones (2015+) use COMPACT3 format**. For more information check [this paper][paper] and [the issue description](https://github.com/DfAC/TEQCSPEC/issues/2).
+Software **require COMPACT2 qc files produced by [teqc](http://bit.ly/1KfxvZM) (*teqc +qc +plot data.16o*). You need to use old binaries as the latest ones (2015+) use COMPACT3 format**. For more information check [this paper][paper] and [the issue description](https://github.com/DfAC/TEQCSPEC/issues/2), which also have link to old Windows binaries.
 
 The sky plot will be based on selected file (*.sn* or *.mp*) yet they are only meaningful for *.mp* files.
 
